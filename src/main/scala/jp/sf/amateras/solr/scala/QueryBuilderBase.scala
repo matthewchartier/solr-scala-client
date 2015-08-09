@@ -38,7 +38,7 @@ trait QueryBuilderBase[Repr <: QueryBuilderBase[Repr]] {
 
   def fq(fq: String): Repr = {
     val ret = copy()
-    ret.solrQuery.addFacetQuery(fq)
+    ret.solrQuery.addFilterQuery(fq)
     ret
   }
 

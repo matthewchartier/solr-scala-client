@@ -2,9 +2,9 @@ name := "solr-scala-client"
 
 organization := "com.eyewyre.solr.scala"
 
-version := "0.0.12"
+version := "0.0.12-SNAPSHOT"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.7"
 
 scalacOptions += "-feature"
 
@@ -30,7 +30,12 @@ libraryDependencies := {
   }
 }
 
-publishTo := Some(Resolver.ssh("amateras-repo-scp", "shell.sourceforge.jp", "/home/groups/a/am/amateras/htdocs/mvn/") withPermissions("0664")
-  as(System.getProperty("user.name"), new java.io.File(Path.userHome.absolutePath + "/.ssh/id_rsa")))
+publishTo := {
+  val archiva = "http://repo.eyewyre.com:8000/repository/"
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at archiva + "snapshots")
+  else
+    Some("releases"  at archiva + "releases")
+}
 
 EclipseKeys.withSource := true
